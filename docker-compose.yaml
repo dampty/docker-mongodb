@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mongodb_container:
+    container_name: mongodb_sandbox
+    image: mongo:latest
+    hostname: my-mongodb
+    ports:
+      - 27017:27017
+    cpus: 1
+    mem_limit: 1G
+    mem_reservation: 1G
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:
+
+
+networks:
+  dev-net:
+    external: true
