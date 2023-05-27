@@ -1,15 +1,22 @@
-version: '3.8'
+version: "4.0"
 
 services:
-  mongodb_container:
-    container_name: mongodb_sandbox
+  #  api-service:
+  #    container_name: api
+  #    build: .
+  #    restart: always
+  #    ports:
+  #      - $APP_LOCAL_PORT:$APP_DOCKER_PORT
+  #    links:
+  #      - api-database
+  api-database:
+    container_name: api-database
     image: mongo:5.0.14
-    hostname: my-mongodb
+    #hostname: srv-api-db - нет коннекта из явы
     ports:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
     cpus: 1
     mem_limit: 1G
-    mem_reservation: 1G
     restart: unless-stopped
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
@@ -18,10 +25,14 @@ services:
     env_file: ./.env
     command: [--auth]
     volumes:
-      - mongodb_data_container:/data/db
+      - ./data:/data/db
+      - ./dump:/dump
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    # Allow docker to connect to localhost
+    #network_mode: "host"
 
 volumes:
-  mongodb_data_container:
+  mongodb_data:
 
 networks:
+  bridge:

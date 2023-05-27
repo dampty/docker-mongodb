@@ -29,3 +29,9 @@ If you need to stop and remove all containers, networks, and all images used by 
 ```bash
 docker-compose down --rmi all
 ```
+
+```bash
+docker exec -i api-database /usr/bin/mongodump --username root --password root --authenticationDatabase admin --db culherdb --out /dump
+```
+
+https://dev.to/mikelogaciuk/docker-initialize-custom-users-and-databases-in-mongodb-3dkb

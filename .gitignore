@@ -1,0 +1,8 @@
+
+### Data ###
+/data/*
+/db/*
+/dump/
+
+### VS Code ###
+.vscode/
